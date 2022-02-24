@@ -1,0 +1,204 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+
+div#root {
+  height: 100%; 
+}
+
+.App {
+  height: 100%; 
+}
+
+/*
+Logging css
+*/
+
+.layout{
+ height: 100%; 
+}
+
+.access-logo{
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  background-color: #0172a7;
+}
+
+.access-login{
+  margin: 25%;
+}
+
+.access-login h4{
+margin-bottom: 10px;
+}
+.check-login {
+  margin-top: 15px;
+}
+.check-login a{
+margin-right: 40px;
+}
+
+.check-register{
+  margin-top: 15px;
+}
+.access-register{
+  margin: 25%;
+}
+
+/*
+Layout css
+*/
+
+
+.top-barr{
+  background-color: black;
+  padding: 0.3%;
+}
+
+.main-panel{
+  background-color: #d5d0d02e;
+}
+
+
+.menu ul{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.menu li{
+  margin-bottom: 15px;
+}
+
+.menu a{
+  color: #38393a;
+}
+
+.official-doc{
+  background-color: #0172a7;
+  padding: 0.6%;
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  color: white;
+}
+
+li{
+  list-style: none;
+}
+
+.sep-right{
+  border-right: solid 1px rgb(209, 209, 209);
+}
+
+.sep-home{
+  border-bottom: solid 1px rgb(209, 209, 209);
+  margin-bottom: 10px;
+  margin-top: 15px;
+}
+
+.alignItemList{
+  margin: 7%;
+}
+
+
+table, th, td{
+  border-collapse: collapse;
+  padding: 8% 0% 8% 0%;
+  margin-top: 15%;
+  width: 100%;
+  
+}
+
+.card-info{
+ padding-left: 7%;
+}
+
+table {
+  border-collapse: collapse;
+  border-radius: 11px;
+  border-style: hidden; /* hide standard table (collapsed) border */
+  box-shadow: 2px 3px 13px 2px #013f5c; /* this draws the table border  */ 
+  background-color: white;
+}
+
+td {
+  border: 2px solid rgba(12, 21, 99, 0.13);
+}
+
+
+.client-card{
+ width: 70%;
+ margin: 0 auto ;
+ margin-bottom: 20%;
+
+}
+
+.client-card td{
+  border-bottom: solid 1px black;
+  
+}
+
+.client-avatar{
+  justify-content: center;
+  text-align: center;
+}
+
+.my-suscriptions{
+  margin: 10% ;
+  text-align: center;
+}
+
+.my-suscriptions h3{
+  margin-bottom: 5%;
+}
+
+.table-info-apps{
+  margin-top: 4%;
+}
+
+.table-info-apps h3{
+  margin: 3%;
+}
+
+.btn-add-app{
+  text-align: right;
+  margin-right: 4%;
+}
+
+.create-app{
+  margin: 5% 15%;
+}
+
+.notification-area{
+  margin: 5% 15%;
+}
+
+.notification-area h2{
+  text-align: center;
+  margin-bottom: 2%;
+}
+.notification-area h3{
+  margin-bottom: 3%;
+}
+.notifications-old{
+  margin-top: 5%;
+}
+
+.logout{
+  margin-top: 45vh;
+  border-top: solid 1px rgb(209, 209, 209);
+  margin-bottom: 30px;
+}
