@@ -5,8 +5,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { authContext } from "../../context/autentication/authContext";
 
-const Createapp = () => {
-  const { logged } = useContext(authContext);
+const Createapp = ({SetCreateApp, SetApps}) => {
+  const { logged,SetMyapps  } = useContext(authContext);
 
   const [newApp, SetnewApp] = useState({ UserId: logged.data._id });
 
@@ -22,7 +22,6 @@ const Createapp = () => {
 
   const btnCreateApp = (e) => {
     e.preventDefault();
-    console.log(newApp);
     axios
       .post(`/api/app`, newApp)
       .then((response) => {
@@ -50,6 +49,24 @@ const Createapp = () => {
           text: e,
         });
       });
+
+
+      axios
+      .get(`/api/countapp/${logged.data._id}`)
+      .then((response) => {
+        SetMyapps(response.data);
+      })
+      axios
+      .get(`/api/app/owner/${logged.data._id}`)
+      .then(function (response) {
+        SetApps(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      setTimeout(() => { SetCreateApp(false) }, 1000)    
+      .catch((e) => console.log(e));
+
   };
 
   return (

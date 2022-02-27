@@ -1,12 +1,33 @@
-import React,{useContext} from "react";
+import React,{useContext, useEffect} from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import { authContext } from "../../context/autentication/authContext";
+import axios from 'axios';
 
 const ClientCard = () => {
 
-  const { logged } = useContext(authContext);
+  const { logged,myapps,SetMyapps,mysubs,SetMysubs } = useContext(authContext);
+
+  useEffect(() => {
+   
+    axios
+      .get(`/api/countapp/${logged.data._id}`)
+      .then((response) => {
+        SetMyapps(response.data)
+      })
+      .catch((e) => console.log(e));
+
+
+      axios
+      .get(`/api/countsubs/${logged.data._id}`)
+      .then((response) => {
+        SetMysubs(response.data)
+      })
+      .catch((e) => console.log(e));
+
+  }, []);
+
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -59,10 +80,10 @@ const ClientCard = () => {
             </td>
           </tr>
           <tr>
-            <td className="card-info">0 Aplicaciones suscritas</td>
+            <td className="card-info">{mysubs} Aplicaciones suscritas</td>
           </tr>
           <tr>
-            <td className="card-info"> 0 Aplicaciones creadas</td>
+            <td className="card-info"> {myapps} Aplicaciones creadas</td>
           </tr>
         </tbody>
       </table>

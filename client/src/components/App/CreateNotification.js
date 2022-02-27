@@ -18,7 +18,7 @@ const CreateNotification = () => {
 
   const GetAllMenssage = (e) =>{
     axios
-    .get(`/api/notification/${id}`)
+    .get(`/api/notificationbyapp/${id}`)
     .then((response) => {
       setListNotification(response.data.notification);
       setAppName(response.data.AppName);
@@ -32,12 +32,11 @@ const CreateNotification = () => {
 
   const sendNotification = (e) => {
     e.preventDefault();
-    console.table(notification);
+
     if (notification.Message !== "") {
       axios
         .post(`/api/notification`, notification)
         .then((response) => {
-          console.log("Guardado correctamente");
           Swal.fire({
             position: "center",
             icon: "success",

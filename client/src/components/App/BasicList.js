@@ -1,4 +1,4 @@
-import { useEffect, useState,useContext } from "react";
+import { useEffect, useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -19,15 +19,29 @@ export default function BasicList() {
   const [apps, SetApps] = useState([]);
   const [createApp, SetCreateApp] = useState(false);
   const [hidelistSus, SethidelistSus] = useState(false);
+  const [hidelistApp, SethidelistApp] = useState(false);
   const [hideApps, SethideApps] = useState(false);
+  const [mysubs, SetMysubs] = useState([]);
 
   let navigate = useNavigate();
   const { logged } = useContext(authContext);
+
   useEffect(() => {
     axios
-      .get(`/api/${logged.data._id}/apps`)
+      .get(`/api/app/owner/${logged.data._id}`)
       .then(function (response) {
         SetApps(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios
+      .get(`/api/subscriber/${logged.data._id}`)
+      .then(function (response) {
+        SetMysubs(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -39,16 +53,25 @@ export default function BasicList() {
   };
 
   const ListApps = apps.map((app) => (
-      <ListItem disablePadding key={app._id}>
-        <ListItemButton onClick={() => clickapp(app._id)}>
-          <ListItemIcon>
-            <DraftsIcon />
-          </ListItemIcon>
-          <ListItemText primary={app.AppName} />
-        </ListItemButton>
-      </ListItem>
+    <ListItem disablePadding key={app._id}>
+      <ListItemButton onClick={() => clickapp(app._id)}>
+        <ListItemIcon>
+          <DraftsIcon />
+        </ListItemIcon>
+        <ListItemText primary={app.AppName} />
+      </ListItemButton>
+    </ListItem>
   ));
-
+  const ListSubs = mysubs.map((app) => (
+    <ListItem disablePadding key={app._id}>
+      <ListItemButton>
+        <ListItemIcon>
+          <DraftsIcon />
+        </ListItemIcon>
+        <ListItemText primary={app.AppName} />
+      </ListItemButton>
+    </ListItem>
+  ));
   const handleadd = () => {
     SetCreateApp(true);
   };
@@ -57,10 +80,14 @@ export default function BasicList() {
     SethidelistSus(!hidelistSus);
   };
 
+  const handleplussub = () => {
+    SethidelistApp(!hidelistApp);
+    SethideApps(!hideApps);
+  };
   return (
     <div>
       {createApp ? (
-        <Createapp />
+        <Createapp SetCreateApp={SetCreateApp}  SetApps = {SetApps}/>
       ) : (
         <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
           {hidelistSus ? null : (
@@ -68,21 +95,18 @@ export default function BasicList() {
               <h3>Mis Suscripciones</h3>
               <nav aria-label="secondary mailbox folders">
                 <List>
+                  {hidelistApp ? (
+                    <div>{ListSubs}</div>
+                  ) : (
+                    <div>
+                      {ListSubs[0]}
+                      {ListSubs[1]}
+                      {ListSubs[2]}
+                    </div>
+                  )}
                   <ListItem disablePadding>
-                    <ListItemButton>
-                      <ListItemText primary="Trash" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton component="a" href="#simple-list">
-                      <ListItemText primary="Spam" />
-                    </ListItemButton>
-                  </ListItem>
-                  <ListItem disablePadding>
-                    <ListItemButton>
-                      <a href="#">
-                        <ListItemText primary="Mostrar más" />
-                      </a>
+                    <ListItemButton onClick={handleplussub}>
+                      <ListItemText primary="Mostrar más"></ListItemText>
                     </ListItemButton>
                   </ListItem>
                 </List>

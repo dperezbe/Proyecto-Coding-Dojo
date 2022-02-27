@@ -4,6 +4,12 @@ var schemaAppSubscribers = mongoose.Schema({
     UserId:{
         type: mongoose.Types.ObjectId,
     },
+    AppName:{
+        type: String
+    },
+    AppId:{
+        type: mongoose.Types.ObjectId,
+    },
     Notification: {
         type: Array
     }

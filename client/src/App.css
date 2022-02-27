@@ -202,3 +202,26 @@ td {
   border-top: solid 1px rgb(209, 209, 209);
   margin-bottom: 30px;
 }
+
+.wrapper-card{
+  width: 88%;
+  margin: 3% auto;
+}
+
+.wrapper-card-sep{
+  margin-top: 20px;
+}
+
+.modal-title-confirm{
+  text-align: center;
+  margin-bottom: 35px;
+}
+
+.btn-sub-container{
+  text-align: center;
+}
+
+.btn-sub{
+  width: 30%;
+}
+

@@ -2,12 +2,12 @@ import React from "react";
 import TopPanel from "./TopPanel";
 import ClientCard from "./ClientCard";
 import Mysubscriptions from "./Mysubscriptions";
-import AlignItemsList from "../MainPanel/AlignItemsList";
 import MainApp from "../App/MainApp";
 import MainNotification from "../Notificacion/MainNotification";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import CreateNotification from "../App/CreateNotification";
+import WrapperCard from "../MainPanel/WrapperCard";
 
 const MainPanel = () => {
   return (
@@ -21,7 +21,7 @@ const MainPanel = () => {
         <Grid item xs={9} style={{ height: "100%" }} className="nav menu-panel">
           <Router>
             <Routes>
-              <Route exact path="/" element={<AlignItemsList />} />
+              <Route exact path="/" element={<WrapperCard />} />
               <Route exact path="/apps" element={<MainApp />} />
               <Route exact path="/notifications" element={<MainNotification />} />
               <Route exact path="/apps/:id" element={<CreateNotification />} />

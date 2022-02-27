@@ -15,17 +15,17 @@ export default function AlignItemsList() {
 
   useEffect(() => {
     axios
-      .get(`/api/apps`)
+      .get(`/api/app`)
       .then((response) => {
         SetApps(response.data);
       })
       .catch((e) => console.log(e));
   }, []);
 
-console.log(apps);
 
   return (
     <List sx={{ width: "100%", bgcolor: "background.paper" }}>
+      {console.log("apps",apps)}
       <ListItem alignItems="flex-start">
         <ListItemAvatar>
           <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />

@@ -2,6 +2,7 @@ const User = require('../models/model.user');
 const jwt = require('jsonwebtoken');
 const {clave} = require('../config/jwt.config');
 const bcrypt = require('bcrypt');
+const appowner = require("../models/model.appowner");
 
 module.exports.registrar = (req, res) => {
     const user = req.body;
@@ -39,6 +40,8 @@ module.exports.login = (req, res) => {
 module.exports.whoami = (req,res) =>{
     const token = req.cookies;
     const verified = jwt.verify(token.usertoken, clave);
+
+
     if(verified){
        return res.send({status: "success",data: verified});
     }else{

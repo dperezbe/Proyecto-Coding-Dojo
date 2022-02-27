@@ -2,13 +2,22 @@ const controllerApps = require('../controllers/controller.apps');
 const { authenticate } = require('../config/jwt.config');
 
 module.exports = (app) => {
-    app.get('/api/apps',authenticate,controllerApps.GetApps);
+    app.get('/api/app',authenticate,controllerApps.GetApps);
     app.get('/api/notification',authenticate,controllerApps.GetNotifications);
-    app.get('/api/:id/apps', authenticate, controllerApps.GetAppsByUser);
+    app.get('/api/app/owner/:id', authenticate, controllerApps.GetAppsByOwner);
+    app.get('/api/app/appId/:id', authenticate, controllerApps.GetAppByAppId);
+    app.get('/api/notificationbyapp/:id',authenticate,controllerApps.GetNotificationbyapp);
     app.get('/api/notification/:id',authenticate,controllerApps.GetNotification);
+    app.get('/api/subscriber/:userid',authenticate,controllerApps.GetSubscriber);
+    app.get('/api/appsubscribers/:id',authenticate,controllerApps.GetAppsubsbyAppId);
+    app.get('/api/countapp/:id',authenticate,controllerApps.CountMyApps);
+    app.get('/api/countsubs/:id',authenticate,controllerApps.CountMySubs);
+
     app.post('/api/app',authenticate,controllerApps.CreateApp);
     app.post('/api/notification',authenticate,controllerApps.CreateNotification);
     app.post('/api/subscriber',authenticate,controllerApps.CreateSubsNotification);
+    app.post('/api/sendnotification/:id',authenticate,controllerApps.SendNotification);
+
     app.put('/api/subscriber/:id',authenticate,controllerApps.PushSubsNotification);
     app.delete('/api/subscriber/:userid/:notid',authenticate,controllerApps.PopSubsNotification);
 
