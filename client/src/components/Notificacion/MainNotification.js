@@ -16,21 +16,15 @@ const MainNotification = () => {
       })
       .then( (kt) => {
         kt.map(k => {
-          let m1 =[]
           k.Notification.map(t => {
               axios.get(`/api/notification/${t}`)
              .then((response) => {
                m1.push(response.data);
-               console.log(m1);
             })
-            
-            console.log(m1);
           })
-        
         })
       }
       )
-      .then(async (s) => await console.log(s))
       .catch(function (error) {
         console.log(error);
       });
