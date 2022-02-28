@@ -41,6 +41,7 @@ export default function BasicList() {
     axios
       .get(`/api/subscriber/${logged.data._id}`)
       .then(function (response) {
+        console.log(response.data)
         SetMysubs(response.data);
       })
       .catch(function (error) {

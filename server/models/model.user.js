@@ -16,7 +16,11 @@ const UserSchema = new mongoose.Schema({
       type: String,
       required: [true, "La clave es requerida"],
       minlength: [6, "La clave debe tener 6 caracteres como mínimo"]
-    }
+    },
+    celular: {
+      type: Number,
+      minlength: [11, "El celular debe contener 11 numeros"]
+    },
   }, {timestamps: true});
 
 UserSchema.virtual('confirmPassword')

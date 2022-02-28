@@ -1,6 +1,9 @@
 const appowner = require("../models/model.appowner");
 const appnotification = require("../models/model.appnotification");
 const appsubscribers = require("../models/model.appsubscribers");
+const appuserdata = require("../models/model.user");
+const requestwp = require('request');
+
 
 const { default: mongoose } = require("mongoose");
 const { request } = require("express");
@@ -13,6 +16,13 @@ module.exports.GetApps = (request, response) => {
 };
 
 module.exports.GetSubscriber = (request, response) => {
+  appsubscribers
+    .find({ UserId: request.params.userid })
+    .then((apps) => response.json(apps))
+    .catch((err) => response.status(400).json(err));
+};
+
+module.exports.GetSubscriberNoti = (request, response) => {
   activenotifications(response ,request.params.userid)
   
 };
@@ -134,26 +144,37 @@ module.exports.SendNotification = (request, response) => {
   response.json(true);
 };
 
+module.exports.SendWhatsapp = (request, response) => {
+  PostCode("este es un mensaje");
+  response.json(true);
+};
+
 updateNotification = (appid, notid) => {
   appsubscribers
     .find({ AppId: appid })
     .then((apps) => {
       apps.forEach((t) => {
-        pushnotification(t._id, notid);
+        pushnotification(t._id, notid,t.UserId);
       });
     })
     .catch((err) => response.status(400).json(err));
 };
 
-pushnotification = (id, notid) => {
+pushnotification = (id, notid,userid) => {
   appsubscribers
     .findOneAndUpdate(
       { _id: id },
       { $push: { Notification: notid } },
       { new: true }
     )
-    .then((data) => console.log(data))
+    .then((data) => data)
     .catch((err) => console.log(err));
+
+    appuserdata
+    .findById(userid)
+    .then(data => PostCode(data.celular, notid))
+    .catch((err) => console.log(err));
+
 };
 
 activenotifications = (response,id) => {
@@ -195,4 +216,25 @@ datanotification = (n) =>{
       return noti
     });
     return data;
+}
+
+
+function PostCode(celular,mensajeid) {
+  datanotification(mensajeid)
+  .then(noti => {
+  requestwp.post('https://api.gupshup.io/sm/api/v1/msg', {
+    form: {
+      'channel': 'whatsapp',
+      'source': '917834811114',
+      'destination': `"${celular}"`,
+      'message' : `{"type":"text","text":"${noti.Message}"}`,
+      'src.name' : 'Test2Diego'
+    },
+    headers: {
+      'apikey': 'shxiwbcljbtjguuilsmxqi8a7ltkkhvi'
+    }
+  })
+  console.log(noti.Message,celular);
+})
+
 }

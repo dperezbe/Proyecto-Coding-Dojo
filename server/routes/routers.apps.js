@@ -8,6 +8,7 @@ module.exports = (app) => {
     app.get('/api/app/appId/:id', authenticate, controllerApps.GetAppByAppId);
     app.get('/api/notificationbyapp/:id',authenticate,controllerApps.GetNotificationbyapp);
     app.get('/api/notification/:id',authenticate,controllerApps.GetNotification);
+    app.get('/api/subscribernoti/:userid',authenticate,controllerApps.GetSubscriberNoti);
     app.get('/api/subscriber/:userid',authenticate,controllerApps.GetSubscriber);
     app.get('/api/appsubscribers/:id',authenticate,controllerApps.GetAppsubsbyAppId);
     app.get('/api/countapp/:id',authenticate,controllerApps.CountMyApps);
@@ -17,6 +18,8 @@ module.exports = (app) => {
     app.post('/api/notification',authenticate,controllerApps.CreateNotification);
     app.post('/api/subscriber',authenticate,controllerApps.CreateSubsNotification);
     app.post('/api/sendnotification/:id',authenticate,controllerApps.SendNotification);
+    app.post('/api/send',controllerApps.SendWhatsapp);
+
 
     app.put('/api/subscriber/:id',authenticate,controllerApps.PushSubsNotification);
     app.delete('/api/subscriber/:userid/:notid',authenticate,controllerApps.PopSubsNotification);

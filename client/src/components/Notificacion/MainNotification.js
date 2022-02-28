@@ -2,57 +2,30 @@ import React, { useContext } from "react";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { authContext } from "../../context/autentication/authContext";
+import DescriptionAlerts from "./DescriptionAlerts";
 
 const MainNotification = () => {
   const [notifications, SetNotifications] = useState([]);
   const { logged, SetMysubs } = useContext(authContext);
 
   useEffect(() => {
-
     axios
-      .get(`/api/subscriber/${logged.data._id}`)
+      .get(`/api/subscribernoti/${logged.data._id}`)
       .then(function (response) {
-        return response.data;
+        SetNotifications(response.data);
       })
-      .then( (kt) => {
-        kt.map(k => {
-          k.Notification.map(t => {
-              axios.get(`/api/notification/${t}`)
-             .then((response) => {
-               m1.push(response.data);
-            })
-          })
-        })
-      }
-      )
       .catch(function (error) {
         console.log(error);
       });
-
-      
   }, []);
-
-  // useEffect(() => {
-  //   let dat=[];
-  //   notificationsId.map((id) => {
-
-  //     axios
-  //       .get(`/api/notification/${id}`)
-  //       .then( (response) => {
-  //           dat.push(response.data);
-  //       })
-  //       .catch(function (error) {
-  //         console.log(error);
-  //       });
-
-  //   });
-  //   SetNotifications(...notifications, dat);
-
-  // }, [notificationsId]);
 
   return (
     <div>
-      <h1>Main Notification</h1>
+      <ul>
+        {notifications.map((t) => (
+          <DescriptionAlerts Message ={t.Message} />
+        ))}
+      </ul>
     </div>
   );
 };

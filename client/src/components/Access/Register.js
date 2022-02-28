@@ -79,6 +79,15 @@ const Register = () => {
           name="email"
           onChange={handlerform}
         />
+          <TextField
+          style={styles.TextField}
+          fullWidth
+          id="celular"
+          label="Celular"
+          variant="filled"
+          name="celular"
+          onChange={handlerform}
+        />
         <TextField
           style={styles.TextField}
           fullWidth

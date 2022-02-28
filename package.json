@@ -14,7 +14,10 @@
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.2",
+    "http": "^0.0.1-security",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^6.1.7"
+    "mongoose": "^6.1.7",
+    "query-string": "^7.1.1",
+    "request": "^2.88.2"
   }
 }
