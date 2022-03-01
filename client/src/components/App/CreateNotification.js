@@ -15,16 +15,15 @@ const CreateNotification = () => {
     GetAllMenssage();
   }, []);
 
-
-  const GetAllMenssage = (e) =>{
+  const GetAllMenssage = (e) => {
     axios
-    .get(`/api/notificationbyapp/${id}`)
-    .then((response) => {
-      setListNotification(response.data.notification);
-      setAppName(response.data.AppName);
-    })
-    .catch((e) => console.log(e));
-  }
+      .get(`/api/notificationbyapp/${id}`)
+      .then((response) => {
+        setListNotification(response.data.notification);
+        setAppName(response.data.AppName);
+      })
+      .catch((e) => console.log(e));
+  };
 
   const handlerform = (e) => {
     SetNotification({ ...notification, [e.target.name]: e.target.value });

@@ -123,6 +123,17 @@ module.exports.PopSubsNotification = (request, response) => {
     .catch((err) => response.json(err));
 };
 
+
+module.exports.DeleteSuscriber = (request, response) => {
+  appsubscribers
+    .findOneAndDelete(
+      { _id: request.params.id },
+    )
+    .then((data) => response.json({error:"false",data:"deleted"}))
+    .catch((err) => response.json(err));
+};
+
+
 module.exports.CountMyApps = (request, response) => {
   appowner
     .find({ UserId: request.params.id })
@@ -226,7 +237,7 @@ function PostCode(celular,mensajeid) {
     form: {
       'channel': 'whatsapp',
       'source': '917834811114',
-      'destination': `"${celular}"`,
+      'destination': `${celular}`,
       'message' : `{"type":"text","text":"${noti.Message}"}`,
       'src.name' : 'Test2Diego'
     },
@@ -234,7 +245,6 @@ function PostCode(celular,mensajeid) {
       'apikey': 'shxiwbcljbtjguuilsmxqi8a7ltkkhvi'
     }
   })
-  console.log(noti.Message,celular);
 })
-
+  return true;
 }

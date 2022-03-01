@@ -23,7 +23,8 @@ module.exports.login = (req, res) => {
                         const datos = {
                             _id: user._id,
                             username: user.username,
-                            email: user.email
+                            email: user.email,
+                            celular: user.celular
                         };
                         const newJWT = jwt.sign(datos, clave);
                         return res.cookie("usertoken", newJWT, clave, {

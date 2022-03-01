@@ -14,6 +14,8 @@ import axios from "axios";
 import Createapp from "./Createapp";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../../context/autentication/authContext";
+import Button from '@mui/material/Button';
+
 
 export default function BasicList() {
   const [apps, SetApps] = useState([]);
@@ -38,17 +40,33 @@ export default function BasicList() {
   }, []);
 
   useEffect(() => {
+    fnmysubs();
+  }, []);
+
+  const fnmysubs = () =>{
     axios
-      .get(`/api/subscriber/${logged.data._id}`)
+    .get(`/api/subscriber/${logged.data._id}`)
+    .then(function (response) {
+      console.log(response.data);
+      SetMysubs(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
+  const unsubscribe = (app) =>{
+    axios
+      .delete(`/api/suscriber/${app}`)
       .then(function (response) {
-        console.log(response.data)
-        SetMysubs(response.data);
+        console.log(response);
+        fnmysubs();
       })
       .catch(function (error) {
         console.log(error);
       });
-  }, []);
-
+  }
+  
   const clickapp = (id) => {
     navigate(`/apps/` + id);
   };
@@ -71,6 +89,9 @@ export default function BasicList() {
         </ListItemIcon>
         <ListItemText primary={app.AppName} />
       </ListItemButton>
+      <Button variant="contained" color="error"  onClick={() => unsubscribe(app._id)}>
+        Borrar suscripción
+      </Button>
     </ListItem>
   ));
   const handleadd = () => {
@@ -88,7 +109,7 @@ export default function BasicList() {
   return (
     <div>
       {createApp ? (
-        <Createapp SetCreateApp={SetCreateApp}  SetApps = {SetApps}/>
+        <Createapp SetCreateApp={SetCreateApp} SetApps={SetApps} />
       ) : (
         <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
           {hidelistSus ? null : (

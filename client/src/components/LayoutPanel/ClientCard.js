@@ -1,33 +1,29 @@
-import React,{useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import { styled } from "@mui/material/styles";
 import Badge from "@mui/material/Badge";
 import Avatar from "@mui/material/Avatar";
 import { authContext } from "../../context/autentication/authContext";
-import axios from 'axios';
+import axios from "axios";
 
 const ClientCard = () => {
-
-  const { logged,myapps,SetMyapps,mysubs,SetMysubs } = useContext(authContext);
+  const { logged, myapps, SetMyapps, mysubs, SetMysubs } =
+    useContext(authContext);
 
   useEffect(() => {
-   
     axios
       .get(`/api/countapp/${logged.data._id}`)
       .then((response) => {
-        SetMyapps(response.data)
+        SetMyapps(response.data);
       })
       .catch((e) => console.log(e));
 
-
-      axios
+    axios
       .get(`/api/countsubs/${logged.data._id}`)
       .then((response) => {
-        SetMysubs(response.data)
+        SetMysubs(response.data);
       })
       .catch((e) => console.log(e));
-
   }, []);
-
 
   const StyledBadge = styled(Badge)(({ theme }) => ({
     "& .MuiBadge-badge": {
@@ -75,7 +71,7 @@ const ClientCard = () => {
                   sx={{ width: 80, height: 80 }}
                 />
               </StyledBadge>
-              
+
               <h3>{logged.data.username}</h3>
             </td>
           </tr>

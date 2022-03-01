@@ -1,12 +1,12 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { authContext } from "../../context/autentication/authContext";
 
-const Createapp = ({SetCreateApp, SetApps}) => {
-  const { logged,SetMyapps  } = useContext(authContext);
+const Createapp = ({ SetCreateApp, SetApps }) => {
+  const { logged, SetMyapps } = useContext(authContext);
 
   const [newApp, SetnewApp] = useState({ UserId: logged.data._id });
 
@@ -50,13 +50,10 @@ const Createapp = ({SetCreateApp, SetApps}) => {
         });
       });
 
-
-      axios
-      .get(`/api/countapp/${logged.data._id}`)
-      .then((response) => {
-        SetMyapps(response.data);
-      })
-      axios
+    axios.get(`/api/countapp/${logged.data._id}`).then((response) => {
+      SetMyapps(response.data);
+    });
+    axios
       .get(`/api/app/owner/${logged.data._id}`)
       .then(function (response) {
         SetApps(response.data);
@@ -64,9 +61,9 @@ const Createapp = ({SetCreateApp, SetApps}) => {
       .catch(function (error) {
         console.log(error);
       });
-      setTimeout(() => { SetCreateApp(false) }, 1000)    
-      .catch((e) => console.log(e));
-
+    setTimeout(() => {
+      SetCreateApp(false);
+    }, 1000).catch((e) => console.log(e));
   };
 
   return (
