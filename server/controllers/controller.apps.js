@@ -73,6 +73,14 @@ module.exports.CreateNotification = (request, response) => {
   updateNotification(request.body.AppId, request.body._id);
 };
 
+module.exports.GetNotibyapp = (request, response) => {
+      appnotification
+        .find({ AppId: request.params.id })
+        .then((p) => response.json({ notification: p}))
+        .catch((err) => response.status(400).json(err))
+    
+};
+
 module.exports.GetNotificationbyapp = (request, response) => {
   appowner
     .findById(request.params.id)

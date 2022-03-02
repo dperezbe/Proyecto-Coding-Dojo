@@ -7,6 +7,7 @@ module.exports = (app) => {
     app.get('/api/app/owner/:id', authenticate, controllerApps.GetAppsByOwner);
     app.get('/api/app/appId/:id', authenticate, controllerApps.GetAppByAppId);
     app.get('/api/notificationbyapp/:id',authenticate,controllerApps.GetNotificationbyapp);
+    app.get('/api/notiapp/:id',authenticate,controllerApps.GetNotibyapp);
     app.get('/api/notification/:id',authenticate,controllerApps.GetNotification);
     app.get('/api/subscribernoti/:userid',authenticate,controllerApps.GetSubscriberNoti);
     app.get('/api/subscriber/:userid',authenticate,controllerApps.GetSubscriber);
