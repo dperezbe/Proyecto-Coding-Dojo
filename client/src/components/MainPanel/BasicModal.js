@@ -1,4 +1,4 @@
-import React, { useContext} from "react";
+import React, { useContext, useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { authContext } from "../../context/autentication/authContext";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 const style = {
   position: "absolute",
@@ -23,10 +24,14 @@ const btnsi = { marginLeft: "40px" };
 
 export default function BasicModal({ AppId, AppName }) {
   const [open, setOpen] = React.useState(false);
+  const [error, SetError] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const { logged, SetMysubs } = useContext(authContext);
 
+  const btnsubsno = () =>{
+    setOpen(false);
+  }
 
   const btnsubs = () => {
     const UserId = logged.data._id;
@@ -39,14 +44,22 @@ export default function BasicModal({ AppId, AppName }) {
       })
       .then((response) => {
         axios
-        .get(`/api/countsubs/${logged.data._id}`)
-        .then((response) => {
-          SetMysubs(response.data);
-        })
-        .catch((e) => console.log(e));
+          .get(`/api/countsubs/${logged.data._id}`)
+          .then((response) => {
+            SetMysubs(response.data);
+          })
+          .catch((e) => console.log(e));
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Usted se ha suscrito exitosamente",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        setOpen(false);
 
       })
-      .catch((e) => console.log(e));
+      .catch((e) => SetError(true));
   };
 
   return (
@@ -65,7 +78,11 @@ export default function BasicModal({ AppId, AppName }) {
             <h3>¿Desea suscribirse a la aplicación?</h3>
           </div>
           <div className="btn-sub-container">
-            <Button variant="contained" className="btn-sub">
+            <Button
+              variant="contained"
+              className="btn-sub"
+              onClick={() => btnsubsno()}
+            >
               No
             </Button>
             <Button
@@ -77,7 +94,10 @@ export default function BasicModal({ AppId, AppName }) {
               Si
             </Button>
           </div>
+          {error ? <p className="error">No puede volver a registrarse en esta app</p>: null}
+
         </Box>
+
       </Modal>
     </div>
   );

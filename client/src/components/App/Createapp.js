@@ -25,7 +25,6 @@ const Createapp = ({ SetCreateApp, SetApps }) => {
     axios
       .post(`/api/app`, newApp)
       .then((response) => {
-        console.log(response);
         if (response.status === 200) {
           Swal.fire({
             position: "center",
@@ -63,7 +62,7 @@ const Createapp = ({ SetCreateApp, SetApps }) => {
       });
     setTimeout(() => {
       SetCreateApp(false);
-    }, 1000).catch((e) => console.log(e));
+    }, 1000);
   };
 
   return (

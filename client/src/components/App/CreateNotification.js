@@ -60,10 +60,9 @@ const CreateNotification = () => {
         <TextareaAutosize
           maxRows={4}
           aria-label="maximum height"
-          placeholder="Maximum 4 rows"
-          defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                ut labore et dolore magna aliqua."
-          style={{ width: "100%", height: "250px" }}
+          placeholder="Notificación de 10 caracteres mínimos"
+          defaultValue="Escriba su notificación aquí."
+          style={{ width: "100%", height: "250px" ,"font-size": "20px"}}
           onChange={handlerform}
           name="Message"
         />

@@ -17,4 +17,6 @@ var schemaAppSubscribers = mongoose.Schema({
   { timestamps: true }
   );
 
+  schemaAppSubscribers.index({ UserId: 1 ,AppId: 1 }, { unique: true})
+
   module.exports = mongoose.model('appsubscribers', schemaAppSubscribers);

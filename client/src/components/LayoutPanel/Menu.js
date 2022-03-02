@@ -61,7 +61,7 @@ const Menu = () => {
               <a href="/notifications">
                 <Tooltip title="Notificaciones" placement="right" arrow>
                   <Tab
-                    icon={<NotificationsSharpIcon sx={{ fontSize: 27 }} />}
+                    icon={<NotificationsSharpIcon sx={{ fontSize: 27,color: 'red'  }}   />}
                   />
                 </Tooltip>
               </a>
@@ -74,7 +74,7 @@ const Menu = () => {
               </a>
             </li>
             <li className="logout">
-              <a href="#">
+              <a href="/">
                 <Tooltip title="Salir" placement="right" arrow>
                   <Tab
                     icon={<LogoutIcon sx={{ fontSize: 27 }} />}

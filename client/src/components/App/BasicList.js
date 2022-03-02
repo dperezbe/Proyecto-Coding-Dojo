@@ -15,7 +15,7 @@ import Createapp from "./Createapp";
 import { useNavigate } from "react-router-dom";
 import { authContext } from "../../context/autentication/authContext";
 import Button from '@mui/material/Button';
-
+import Swal from "sweetalert2";
 
 export default function BasicList() {
   const [apps, SetApps] = useState([]);
@@ -23,32 +23,36 @@ export default function BasicList() {
   const [hidelistSus, SethidelistSus] = useState(false);
   const [hidelistApp, SethidelistApp] = useState(false);
   const [hideApps, SethideApps] = useState(false);
-  const [mysubs, SetMysubs] = useState([]);
+  const [subs, Setsubs] = useState([]);
 
   let navigate = useNavigate();
   const { logged } = useContext(authContext);
 
   useEffect(() => {
-    axios
-      .get(`/api/app/owner/${logged.data._id}`)
-      .then(function (response) {
-        SetApps(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    fnapp();
   }, []);
 
   useEffect(() => {
     fnmysubs();
   }, []);
 
+  const fnapp = () => {
+    axios
+    .get(`/api/app/owner/${logged.data._id}`)
+    .then(function (response) {
+      SetApps(response.data);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+  
   const fnmysubs = () =>{
     axios
     .get(`/api/subscriber/${logged.data._id}`)
     .then(function (response) {
-      console.log(response.data);
-      SetMysubs(response.data);
+      Setsubs(response.data);
+      
     })
     .catch(function (error) {
       console.log(error);
@@ -59,7 +63,13 @@ export default function BasicList() {
     axios
       .delete(`/api/suscriber/${app}`)
       .then(function (response) {
-        console.log(response);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Suscripción eliminada",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         fnmysubs();
       })
       .catch(function (error) {
@@ -71,6 +81,25 @@ export default function BasicList() {
     navigate(`/apps/` + id);
   };
 
+  const delapp = (app) =>{
+    console.log("borrar app");
+    axios
+    .delete(`/api/app/${app}`)
+    .then(function (response) {
+      Swal.fire({
+        position: "center",
+        icon: "success",
+        title: "Aplicación eliminada",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      fnapp();
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+  }
+
   const ListApps = apps.map((app) => (
     <ListItem disablePadding key={app._id}>
       <ListItemButton onClick={() => clickapp(app._id)}>
@@ -79,9 +108,12 @@ export default function BasicList() {
         </ListItemIcon>
         <ListItemText primary={app.AppName} />
       </ListItemButton>
+      <Button variant="contained" color="error"  onClick={() => delapp(app._id)}>
+        Borrar aplicación
+      </Button>
     </ListItem>
   ));
-  const ListSubs = mysubs.map((app) => (
+  const ListSubs = subs.map((app) => (
     <ListItem disablePadding key={app._id}>
       <ListItemButton>
         <ListItemIcon>

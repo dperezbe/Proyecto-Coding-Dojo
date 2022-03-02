@@ -10,7 +10,7 @@ const { request } = require("express");
 
 module.exports.GetApps = (request, response) => {
   appowner
-    .find({})
+    .find({}).sort({createdAt: "descending"})
     .then((apps) => response.json(apps))
     .catch((err) => response.status(400).json(err));
 };
@@ -126,6 +126,15 @@ module.exports.PopSubsNotification = (request, response) => {
 
 module.exports.DeleteSuscriber = (request, response) => {
   appsubscribers
+    .findOneAndDelete(
+      { _id: request.params.id },
+    )
+    .then((data) => response.json({error:"false",data:"deleted"}))
+    .catch((err) => response.json(err));
+};
+
+module.exports.DeleteApp = (request, response) => {
+  appowner
     .findOneAndDelete(
       { _id: request.params.id },
     )

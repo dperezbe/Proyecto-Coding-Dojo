@@ -23,6 +23,7 @@ module.exports = (app) => {
 
     app.put('/api/subscriber/:id',authenticate,controllerApps.PushSubsNotification);
     app.delete('/api/suscriber/:id',authenticate,controllerApps.DeleteSuscriber);
+    app.delete('/api/app/:id',authenticate,controllerApps.DeleteApp);    
     app.delete('/api/notification/:userid/:notid',authenticate,controllerApps.PopSubsNotification);
 
 }
